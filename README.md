@@ -17,7 +17,7 @@ Problema do barbeiro dorminhoco implementado na linguagem C, utilizando os conce
             <li> Após o corte, o cliente está libre para sair </li>
             <li> Se houver cliente na fila, o próximo cliente se senta na cadeira imediatamente após ela ser liberada </li>
             <li> Se não h  ouver cliente na fila, o barbeiro volda a dormir </li>
-        <ol>
+        </ol>
     </li>
     <li>
         Ações do cliente:
@@ -28,7 +28,7 @@ Problema do barbeiro dorminhoco implementado na linguagem C, utilizando os conce
                 <li> Caso a fila esteja cheia, o cliente vai embora </li>
                 <li> Se pelo menos um barbeiro estiver dormindo, o cliente dispara o sinal que acorda o barbeiro há mais tempo </li>
                 <li> O cliente respeita a ordem de chegada </li>
-            <ol>
+            </ol>
         </li>
 </ul>
 
