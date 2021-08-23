@@ -1,10 +1,4 @@
 
-/* Grupo:
-Danilo de Castro - 2017011925,
-Pedro Fernandes de Oliveira - 2017016449,
-Lucas Daves - 2017012397
-*/
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,16 +13,16 @@ sem_t clientes;                 //Semaforo
 sem_t barbeiros;                   //Semaforo
 sem_t mutex;                     //Semaforo
 
-//VARIÁVEIS COMPARTILHADAS
+//VARIï¿½VEIS COMPARTILHADAS
 int cadeirasLivres = MAX_CADEIRAS;   //Contador de lugares livres na barbearia
-int identificadorAssento[MAX_CADEIRAS];         // troca de referencia entre cada barbeiro e cliente através de "ID's"
+int identificadorAssento[MAX_CADEIRAS];         // troca de referencia entre cada barbeiro e cliente atravï¿½s de "ID's"
 int proximoAssentoLivre = 0;                  //indice do proximo assento livre
 int proximoCorte = 0;                  //indice do proximo cliente candidato ao corte
 static int cont = 0;                 //contador do numero dos clientes
 int desistencias = 0;
 
 
-//FUNÇÕES
+//FUNï¿½ï¿½ES
 void threadBarbeiro(void *tmp);         //Funcao Thread barbeiro
 void threadCliente(void *tmp);       //Funcao Thread do cliente
 int tempoCliente();			// tempo de atraso para a entrada dos clientes
@@ -37,16 +31,16 @@ int tempoCorte();                          // tempo de atraso do corte
 
 int main()
 {
-    	pthread_t barbeiro[NUM_BARB],cliente[MAX_CLI]; //declaração das threads
+    	pthread_t barbeiro[NUM_BARB],cliente[MAX_CLI]; //declaraï¿½ï¿½o das threads
     	int i,status=0;
-    	//inicialização do semáforo
+    	//inicializaï¿½ï¿½o do semï¿½foro
     	sem_init(&clientes,0,0);
     	sem_init(&barbeiros,0,0);
     	sem_init(&mutex,0,1);
-    	//inicialização da thread dos barbeiros
+    	//inicializaï¿½ï¿½o da thread dos barbeiros
 
     	printf("!!A BARBEARIA ESTA ABERTA!!\n");
-	for(i=0;i<NUM_BARB;i++)                     //Criação dos 3 barbeiros
+	for(i=0;i<NUM_BARB;i++)                     //Criaï¿½ï¿½o dos 3 barbeiros
     	{
 	       	status=pthread_create(&barbeiro[i],NULL,(void *)threadBarbeiro,(void*)&i);
 	       	sleep(1);
@@ -54,8 +48,8 @@ int main()
 		  	perror("Sem barbeiros!!\n");
 	}
 
-	//inicialização das threads dos clientes
-	for(i=0;i<MAX_CLI;i++)                     //Criação dos clientes
+	//inicializaï¿½ï¿½o das threads dos clientes
+	for(i=0;i<MAX_CLI;i++)                     //Criaï¿½ï¿½o dos clientes
 	{
 		status=pthread_create(&cliente[i],NULL,(void *)threadCliente,(void*)&i);
 		sleep(tempoCliente());     // pausa a chegada de clientes em x segundos
@@ -70,19 +64,19 @@ int main()
 	exit(EXIT_SUCCESS);  //Saida do loop infinito
 }
 
-int tempoCliente()     //Geração de número aleatório entre 1 e 6
+int tempoCliente()     //Geraï¿½ï¿½o de nï¿½mero aleatï¿½rio entre 1 e 6
 {
      	int x = rand() % 6 +1; // colocar 6 no lugar do 2
 	return x;
 }
 
-int tempoCorte()     //Geração de número aleatório entre 3 e 6
+int tempoCorte()     //Geraï¿½ï¿½o de nï¿½mero aleatï¿½rio entre 3 e 6
 {
      	int x = rand() % 4 +3;
 	return x;
 }
 
-void threadCliente(void *tmp)  /*Ação dos Clientes*/
+void threadCliente(void *tmp)  /*Aï¿½ï¿½o dos Clientes*/
 {
 	int meuLugar, Barb;
     	sem_wait(&mutex);  //Lock mutex para proteger lugares sentados
@@ -100,12 +94,12 @@ void threadCliente(void *tmp)  /*Ação dos Clientes*/
 		sem_post(&barbeiros);                		//Acorda um barbeiro
 		sem_wait(&clientes);              		//Entra na fila de clientes na espera
 		sem_wait(&mutex);                  		//bloqueia o mutex para proteger lugares ocupados
-		Barb = identificadorAssento[meuLugar];    	//conexão entre o Barbeiro e o cliente, o barbeiro atribui o ID do cliente para ele
+		Barb = identificadorAssento[meuLugar];    	//conexï¿½o entre o Barbeiro e o cliente, o barbeiro atribui o ID do cliente para ele
 		cadeirasLivres++;             			//levanta e vai para a cadeira do barbeiro
 		sem_post(&mutex);                        	//seta o mutex de assento ocupado
 		        					//clientes tendo o seu cabelo cortado pelo barbeiro 'B
 	}
-	else // Caso não tenha cadeiras Livres
+	else // Caso nï¿½o tenha cadeiras Livres
 	{
 	       sem_post(&mutex);  //libera o mutex e o cliente vai embora sem cortar cabelo
 	       printf("Cliente -%d Saiu.\n",cont);
@@ -114,15 +108,15 @@ void threadCliente(void *tmp)  /*Ação dos Clientes*/
 	pthread_exit(0);
 }
 
-void threadBarbeiro(void *tmp)        //Ação dos Barbeiros
+void threadBarbeiro(void *tmp)        //Aï¿½ï¿½o dos Barbeiros
 {
 	    int indice = *(int *)(tmp);
 	    int meuProximo, Cli;
 
-	    while(1)            				//Laço Infinito
+	    while(1)            				//Laï¿½o Infinito
 	    {
-		sem_wait(&mutex);		//bloqueando o mutex para verificar se não há cadeiras
-		if(cadeirasLivres == MAX_CADEIRAS)  	// se não houver clientes
+		sem_wait(&mutex);		//bloqueando o mutex para verificar se nï¿½o hï¿½ cadeiras
+		if(cadeirasLivres == MAX_CADEIRAS)  	// se nï¿½o houver clientes
 			printf("Barbeiro-%d Foi dormir.\n",indice+1);
 		sem_post(&mutex);
 
@@ -131,11 +125,11 @@ void threadBarbeiro(void *tmp)        //Ação dos Barbeiros
 		proximoCorte = (++proximoCorte) % MAX_CADEIRAS;  	//seleciona um novo cliente
 		meuProximo = proximoCorte;
 		Cli = identificadorAssento[meuProximo];                  	//pega o "ID" do cliente selecionado
-		identificadorAssento[meuProximo] = pthread_self();     	//atribui o seu ID para o cliente, através do vetor de ID's
+		identificadorAssento[meuProximo] = pthread_self();     	//atribui o seu ID para o cliente, atravï¿½s do vetor de ID's
 		sem_post(&mutex);
 		sem_post(&clientes);         				//Chama o cliente selecionado
-		        						//O Barbeiro está cortando o cabelo do cliente 'C'
-		printf("Barbeiro -%d está acordado e cortando o cabelo do cliente-%d.\n",indice+1,Cli);
+		        						//O Barbeiro estï¿½ cortando o cabelo do cliente 'C'
+		printf("Barbeiro -%d estï¿½ acordado e cortando o cabelo do cliente-%d.\n",indice+1,Cli);
 		sleep(tempoCorte());
 		printf("Barbeiro -%d Acabou o corte do cliente-%d.\n ",indice+1, Cli);
 	    }
