@@ -23,7 +23,7 @@ Problema do barbeiro dorminhoco implementado na linguagem C, utilizando os conce
         Ações do cliente:
         <br>
             <ol>
-                <li> Qunado o cliente chega na barbearia e há cadeiras/barbeiros disponíveis, ele é atendido imediatamente<li>
+                <li> Qunado o cliente chega na barbearia e há cadeiras/barbeiros disponíveis, ele é atendido imediatamente</li>
                 <li> Se não houver cadeira/barbeiro disponível, o cliente espera na fila de atendimento (máx 20 pessoas) </li>
                 <li> Caso a fila esteja cheia, o cliente vai embora </li>
                 <li> Se pelo menos um barbeiro estiver dormindo, o cliente dispara o sinal que acorda o barbeiro há mais tempo </li>
